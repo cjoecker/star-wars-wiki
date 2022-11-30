@@ -1,8 +1,8 @@
 # Star Wars WIKI 🪐📙
 
-**A small wiki for star wars characters, planets and starships**\
+**A small wiki for star wars characters, planets and starships** 
 
-<img style="https://user-images.githubusercontent.com/46030630/204879006-088f68f9-dc72-49ee-bb86-311b2562a080.gif" alt="preview" width="400"/>
+![app preview](https://user-images.githubusercontent.com/46030630/204879006-088f68f9-dc72-49ee-bb86-311b2562a080.gif)
 
 ## 🚀 How to start
 1. Install Node (see below)
