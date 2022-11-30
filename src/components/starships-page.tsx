@@ -9,12 +9,12 @@ import { Error } from './error'
 import { addId, getIdFromUrl } from '../utils/getIdFromUrl'
 import { ProfileEntry } from './profile-entry'
 
-export const PlanetsPage = () => {
-  let { planetId } = useParams()
+export const StarshipsPage = () => {
+  let { starshipId } = useParams()
 
-  const { isLoading, error, data } = useQuery<Planet>({
-    queryKey: ['planets', planetId],
-    queryFn: () => fetch(`${BASE_URL}/planets/${planetId}`).then((res) => res.json()),
+  const { isLoading, error, data } = useQuery<Starship>({
+    queryKey: ['starships', starshipId],
+    queryFn: () => fetch(`${BASE_URL}/starships/${starshipId}`).then((res) => res.json()),
   })
 
   if (error) {
@@ -31,12 +31,12 @@ export const PlanetsPage = () => {
           <>
             <h1 className="text-4xl bold my-4 underline">{data?.name}</h1>
             <div className="grid grid-cols-3 gap-12 mt-6">
-              <ProfileEntry label="Climate" value={data?.climate} />
-              <ProfileEntry label="Terrain" value={data?.terrain} />
-              <ProfileEntry label="Diameter" value={data?.diameter} />
-              <ProfileEntry label="Gravity" value={data?.gravity} />
-              <ProfileEntry label="Orbital period" value={data?.orbital_period} />
-              <ProfileEntry label="Population" value={data?.population} />
+              <ProfileEntry label="Consumables" value={data?.consumables} />
+              <ProfileEntry label="Crew" value={data?.crew} />
+              <ProfileEntry label="Hyperdrive rating" value={data?.hyperdrive_rating} />
+              <ProfileEntry label="Manufacturer" value={data?.manufacturer} />
+              <ProfileEntry label="Model" value={data?.model} />
+              <ProfileEntry label="Name" value={data?.name} />
             </div>
           </>
         )}
