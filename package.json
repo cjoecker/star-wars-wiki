@@ -10,9 +10,9 @@
     "start:dev": "cross-env ESLINT_NO_DEV_ERRORS=true react-scripts start",
     "format": "prettier --write",
     "lint": "eslint --max-warnings=0",
-    "lint:fix": "pnpm lint --fix",
-    "lint:all": "pnpm lint .",
-    "lint:fix:all": "pnpm lint:fix .",
+    "lint:fix": "npm run lint --fix",
+    "lint:all": "npm run lint .",
+    "lint:fix:all": "npm run lint:fix .",
     "check-types": "tsc --noemit -p tsconfig.json --incremental"
   },
   "dependencies": {
