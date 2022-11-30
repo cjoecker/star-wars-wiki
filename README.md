@@ -2,7 +2,7 @@
 
 **A small wiki for star wars characters, planets and starships**
 
-![app preview](https://user-images.githubusercontent.com/46030630/204879006-088f68f9-dc72-49ee-bb86-311b2562a080.gif)
+![app preview](https://user-images.githubusercontent.com/46030630/204901128-b516e5e4-d1e0-4f2a-bf9f-b500a81a7d59.gif)
 
 ## 🚀 How to start
 
