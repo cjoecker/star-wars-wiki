@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
+import {People} from "./components/people";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/planets',
     element: <List type={'planets'} />,
+  },
+  {
+    path: '/people/:peopleId',
+    element: <People />,
   },
 ])
 
