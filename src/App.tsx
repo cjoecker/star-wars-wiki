@@ -1,18 +1,15 @@
 import './App.css'
 import { List } from './components/list'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { PeoplePage } from './components/people-page'
-import { PlanetsPage } from './components/planets-page'
-import {StarshipsPage} from "./components/starships-page";
+import { PeoplePage } from './pages/people-page'
+import { PlanetsPage } from './pages/planets-page'
+import {StarshipsPage} from "./pages/starships-page";
+import {IndexPage} from "./pages/index-page";
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <List type={'people'} />,
-  },
-  {
-    path: '/planets',
-    element: <List type={'planets'} />,
+    element: <IndexPage/>,
   },
   {
     path: '/people/:peopleId',

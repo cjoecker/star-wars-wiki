@@ -3,9 +3,9 @@ import { BASE_URL } from '../constants/api'
 import * as React from 'react'
 import { useParams } from 'react-router-dom'
 import { People, Planet, Starship } from '../types/api'
-import { HomeButton } from './home-button'
-import { Loading } from './loading'
-import { Error } from './error'
+import { HomeButton } from '../components/home-button'
+import { Loading } from '../components/loading'
+import { Error } from '../components/error'
 import { addId, getIdFromUrl } from '../utils/getIdFromUrl'
 
 export type ProfileEntryProps = {

@@ -3,11 +3,11 @@ import { BASE_URL } from '../constants/api'
 import * as React from 'react'
 import { useParams } from 'react-router-dom'
 import { People, Planet, Starship } from '../types/api'
-import { HomeButton } from './home-button'
-import { Loading } from './loading'
-import { Error } from './error'
+import { HomeButton } from '../components/home-button'
+import { Loading } from '../components/loading'
+import { Error } from '../components/error'
 import { addId, getIdFromUrl } from '../utils/getIdFromUrl'
-import { ProfileEntry } from './profile-entry'
+import { ProfileEntry } from '../components/profile-entry'
 
 export const StarshipsPage = () => {
   let { starshipId } = useParams()
@@ -30,7 +30,7 @@ export const StarshipsPage = () => {
         ) : (
           <>
             <h1 className="text-4xl bold my-4 underline">{data?.name}</h1>
-            <div className="grid grid-cols-3 gap-12 mt-6">
+            <div className="grid grid-cols-3 gap-12 mt-6 max-w-3xl">
               <ProfileEntry label="Consumables" value={data?.consumables} />
               <ProfileEntry label="Crew" value={data?.crew} />
               <ProfileEntry label="Hyperdrive rating" value={data?.hyperdrive_rating} />

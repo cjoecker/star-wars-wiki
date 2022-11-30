@@ -7,15 +7,18 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { People, Planet, Starship } from '../types/api'
 import { addId } from '../utils/getIdFromUrl'
-import {IPeople} from "swapi-ts";
+import { IPeople } from 'swapi-ts'
+import { Error } from './error'
+import { Loading } from './loading'
 
-type ListType = 'people' | 'starships' | 'planets'
+export type ListType = 'people' | 'starships' | 'planets'
 
 type ListProps = {
   type: ListType
+  searchText: string
 }
 
-export const List = ({ type }: ListProps) => {
+export const List = ({ type, searchText }: ListProps) => {
   const { isLoading, error, data } = useQuery<People[]>({
     queryKey: [type],
     queryFn: () =>
@@ -25,7 +28,6 @@ export const List = ({ type }: ListProps) => {
     staleTime: 50000000,
   })
   const [favorites, setFavorites] = useState<People['name'][]>([])
-  const [searchText, setSearchText] = useState('')
   const navigate = useNavigate()
 
   const handleFavouriteClick = (name: People['name']) => {
@@ -40,28 +42,27 @@ export const List = ({ type }: ListProps) => {
     item.name.toLowerCase().includes(searchText.toLowerCase()),
   )
 
+  if (error) {
+    return <Error error={error} />
+  }
+
   return (
     <div className="flex flex-col mx-auto items-center gap-3">
-      <div className="flex flex-col w-72 flex-0 mb-4 mt-2">
-        <label htmlFor="search">Search</label>
-        <input
-          className="rounded-lg p-2"
-          type="text"
-          id="search"
-          onChange={(event) => setSearchText(event.target.value)}
-        />
-      </div>
-      {filteredItems?.map((item) => {
-        return (
-          <ListItem
-            key={item.id}
-            name={item.name}
-            isFavourite={favorites.includes(item.name)}
-            onFavouriteClick={handleFavouriteClick}
-            onClickMoreInformation={() => navigate(`/${type}/${item.id}`)}
-          />
-        )
-      })}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        filteredItems?.map((item) => {
+          return (
+            <ListItem
+              key={item.id}
+              name={item.name}
+              isFavourite={favorites.includes(item.name)}
+              onFavouriteClick={handleFavouriteClick}
+              onClickMoreInformation={() => navigate(`/${type}/${item.id}`)}
+            />
+          )
+        })
+      )}
     </div>
   )
 }
@@ -79,21 +80,27 @@ const ListItem = ({
   onFavouriteClick,
 }: ListItemProps) => {
   return (
-    <div className="p-2 bg-gray-900 rounded-xl flex w-[500px]">
+    <div className="p-2 bg-gray-900 rounded-xl flex w-[450px]">
       <div className="text-lg mx-4 my-auto flex-1">{name}</div>
       <div className="flex">
         <button
           className="rounded-xl bg-gray-800 py-2 px-4 hover:bg-gray-700"
           onClick={onClickMoreInformation}
         >
-          MORE INFORMATION
+          SEE MORE
         </button>
         <button
           className="my-auto h-full ml-4"
           onClick={() => onFavouriteClick(name)}
           aria-label={isFavourite ? 'not favourite anymore' : 'favourite'}
         >
-          <img width="48px" height="48px" className="w-8 h-8 my-auto" alt="heart" src={isFavourite ? likeIconFilled : likeIconEmpty} />
+          <img
+            width="48px"
+            height="48px"
+            className="w-8 h-8 my-auto"
+            alt="heart"
+            src={isFavourite ? likeIconFilled : likeIconEmpty}
+          />
         </button>
       </div>
     </div>
