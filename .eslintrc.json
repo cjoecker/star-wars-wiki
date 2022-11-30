@@ -12,6 +12,7 @@
   "overrides": [
     {
       "files": ["**/*.ts", "**/*.tsx"],
+      "excludedFiles": "vite.config.ts",
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": ["./tsconfig.json"],

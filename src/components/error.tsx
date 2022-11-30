@@ -1,6 +1,3 @@
-import * as React from 'react'
-import { HomeButton } from './home-button'
-
 export type Props = {
   error: unknown
 }

@@ -1,13 +1,3 @@
-import { useQueries, useQuery } from '@tanstack/react-query'
-import { BASE_URL } from '../constants/api'
-import * as React from 'react'
-import { useParams } from 'react-router-dom'
-import { People, Planet, Starship } from '../types/api'
-import { HomeButton } from '../components/home-button'
-import { Loading } from '../components/loading'
-import { Error } from '../components/error'
-import { addId, getIdFromUrl } from '../utils/getIdFromUrl'
-import { ProfileEntry } from '../components/profile-entry'
 import { List, ListType } from '../components/list'
 import { useState } from 'react'
 
@@ -35,7 +25,7 @@ export const IndexPage = () => {
   const [searchText, setSearchText] = useState('')
   return (
     <div className="flex flex-col items-center">
-        <h1 className="text-5xl bold mt-5 mb-10">Star Wars WIKI</h1>
+      <h1 className="text-5xl bold mt-5 mb-10">Star Wars WIKI</h1>
       <div className="flex flex-col w-72 flex-0 mb-14 mt-2">
         <label htmlFor="search">Search</label>
         <input

@@ -1,4 +1,3 @@
-import * as React from 'react'
 import likeIconFilled from '../assets/like-icon-filled.svg'
 import likeIconEmpty from '../assets/like-icon-empty.svg'
 import { useQuery } from '@tanstack/react-query'
@@ -6,12 +5,52 @@ import { BASE_URL } from '../constants/api'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { People, Planet, Starship } from '../types/api'
-import { addId } from '../utils/getIdFromUrl'
-import { IPeople } from 'swapi-ts'
+import { addId } from '../utils/parse-url-id'
 import { Error } from './error'
 import { Loading } from './loading'
 
 export type ListType = 'people' | 'starships' | 'planets'
+
+type ListItemProps = {
+  name: People['name'] | Starship['name'] | Planet['name']
+  onClickMoreInformation: VoidFunction
+  isFavourite: boolean
+  onFavouriteClick: (name: People['name']) => void
+}
+const ListItem = ({
+                    name,
+                    onClickMoreInformation,
+                    isFavourite,
+                    onFavouriteClick,
+                  }: ListItemProps) => {
+  return (
+      <div className="p-2 bg-gray-900 rounded-xl flex w-[450px]">
+        <div className="text-lg mx-4 my-auto flex-1">{name}</div>
+        <div className="flex">
+          <button
+              className="rounded-xl bg-gray-800 py-2 px-4 hover:bg-gray-700"
+              onClick={onClickMoreInformation}
+          >
+            SEE MORE
+          </button>
+          <button
+              className="my-auto h-full ml-4"
+              onClick={() => onFavouriteClick(name)}
+              aria-label={isFavourite ? 'not favourite anymore' : 'favourite'}
+          >
+            <img
+                width="48px"
+                height="48px"
+                className="w-8 h-8 my-auto"
+                alt="heart"
+                src={isFavourite ? likeIconFilled : likeIconEmpty}
+            />
+          </button>
+        </div>
+      </div>
+  )
+}
+
 
 type ListProps = {
   type: ListType
@@ -24,10 +63,9 @@ export const List = ({ type, searchText }: ListProps) => {
     queryFn: () =>
       fetch(`${BASE_URL}/${type}`)
         .then((res) => res.json())
-        .then((res) => res?.results.map((result: IPeople) => addId(result))),
-    staleTime: 50000000,
+        .then((res) => res?.results.map((result: People | Starship | Planet) => addId(result))),
   })
-  const [favorites, setFavorites] = useState<People['name'][]>([])
+  const [favorites, setFavorites] = useState<string[]>([])
   const navigate = useNavigate()
 
   const handleFavouriteClick = (name: People['name']) => {
@@ -67,42 +105,3 @@ export const List = ({ type, searchText }: ListProps) => {
   )
 }
 
-type ListItemProps = {
-  name: string
-  onClickMoreInformation: VoidFunction
-  isFavourite: boolean
-  onFavouriteClick: (name: People['name']) => void
-}
-const ListItem = ({
-  name,
-  onClickMoreInformation,
-  isFavourite,
-  onFavouriteClick,
-}: ListItemProps) => {
-  return (
-    <div className="p-2 bg-gray-900 rounded-xl flex w-[450px]">
-      <div className="text-lg mx-4 my-auto flex-1">{name}</div>
-      <div className="flex">
-        <button
-          className="rounded-xl bg-gray-800 py-2 px-4 hover:bg-gray-700"
-          onClick={onClickMoreInformation}
-        >
-          SEE MORE
-        </button>
-        <button
-          className="my-auto h-full ml-4"
-          onClick={() => onFavouriteClick(name)}
-          aria-label={isFavourite ? 'not favourite anymore' : 'favourite'}
-        >
-          <img
-            width="48px"
-            height="48px"
-            className="w-8 h-8 my-auto"
-            alt="heart"
-            src={isFavourite ? likeIconFilled : likeIconEmpty}
-          />
-        </button>
-      </div>
-    </div>
-  )
-}

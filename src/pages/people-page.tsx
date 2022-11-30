@@ -1,64 +1,11 @@
 import { useQueries, useQuery } from '@tanstack/react-query'
 import { BASE_URL } from '../constants/api'
-import * as React from 'react'
 import { useParams } from 'react-router-dom'
-import { People, Planet, Starship } from '../types/api'
+import {People, Planet, Starship} from '../types/api'
 import { HomeButton } from '../components/home-button'
 import { Loading } from '../components/loading'
 import { Error } from '../components/error'
-import { addId, getIdFromUrl } from '../utils/getIdFromUrl'
-
-export type ProfileEntryProps = {
-  label: string
-  value?: string
-}
-export const ProfileEntry = ({ label, value }: ProfileEntryProps) => {
-  return (
-    <div className="col-span-1 flex-col">
-      <h2 className="font-bold">{label}</h2>
-      <div className="text-3xl capitalize">{value ?? 'Undefined'}</div>
-    </div>
-  )
-}
-
-export const PeoplePage = () => {
-  let { peopleId } = useParams()
-  const { isLoading, error, data } = useQuery<People>({
-    queryKey: ['people', peopleId],
-    queryFn: () => fetch(`${BASE_URL}/people/${peopleId}`).then((res) => res.json()),
-  })
-
-  if (error) {
-    return <Error error={error} />
-  }
-
-  return (
-    <>
-      <HomeButton />
-      <div className="flex flex-col items-center">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            <h1 className="text-4xl bold my-4 underline">{data?.name}</h1>
-            <div className="grid grid-cols-3 gap-12 mt-6">
-              <ProfileEntry label="Height (cm)" value={data?.height} />
-              <ProfileEntry label="Birth year" value={data?.birth_year} />
-              <ProfileEntry label="Gender" value={data?.gender} />
-              <ProfileEntry label="Hair color" value={data?.hair_color} />
-              <ProfileEntry label="Mass" value={data?.mass} />
-              <ProfileEntry label="Skin color" value={data?.skin_color} />
-              <Homeworlds id={getIdFromUrl(data?.url)} />
-              <Starships
-                ids={data?.starships.map((starship) => getIdFromUrl(starship as string))}
-              />
-            </div>
-          </>
-        )}
-      </div>
-    </>
-  )
-}
+import { addId, parseUrlId } from '../utils/parse-url-id'
 
 type HomeworldsProps = {
   id: string | undefined
@@ -136,5 +83,55 @@ export function Starships({ ids }: StarshipsProps) {
         <div>None</div>
       )}
     </div>
+  )
+}
+
+export type ProfileEntryProps = {
+  label: string
+  value?: string
+}
+export const ProfileEntry = ({ label, value }: ProfileEntryProps) => {
+  return (
+    <div className="col-span-1 flex-col">
+      <h2 className="font-bold">{label}</h2>
+      <div className="text-3xl capitalize">{value ?? 'Undefined'}</div>
+    </div>
+  )
+}
+
+export const PeoplePage = () => {
+  const { peopleId } = useParams()
+  const { isLoading, error, data } = useQuery<People>({
+    queryKey: ['people', peopleId],
+    queryFn: () => fetch(`${BASE_URL}/people/${peopleId}`).then((res) => res.json()),
+  })
+
+  if (error) {
+    return <Error error={error} />
+  }
+
+  return (
+    <>
+      <HomeButton />
+      <div className="flex flex-col items-center">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <h1 className="text-4xl bold my-4 underline">{data?.name}</h1>
+            <div className="grid grid-cols-3 gap-12 mt-6">
+              <ProfileEntry label="Height (cm)" value={data?.height} />
+              <ProfileEntry label="Birth year" value={data?.birth_year} />
+              <ProfileEntry label="Gender" value={data?.gender} />
+              <ProfileEntry label="Hair color" value={data?.hair_color} />
+              <ProfileEntry label="Mass" value={data?.mass} />
+              <ProfileEntry label="Skin color" value={data?.skin_color} />
+              <Homeworlds id={parseUrlId(data?.url)} />
+              <Starships ids={data?.starships.map((starship) => parseUrlId(starship))} />
+            </div>
+          </>
+        )}
+      </div>
+    </>
   )
 }

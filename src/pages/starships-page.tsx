@@ -1,16 +1,14 @@
-import { useQueries, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { BASE_URL } from '../constants/api'
-import * as React from 'react'
 import { useParams } from 'react-router-dom'
-import { People, Planet, Starship } from '../types/api'
+import { Starship } from '../types/api'
 import { HomeButton } from '../components/home-button'
 import { Loading } from '../components/loading'
 import { Error } from '../components/error'
-import { addId, getIdFromUrl } from '../utils/getIdFromUrl'
 import { ProfileEntry } from '../components/profile-entry'
 
 export const StarshipsPage = () => {
-  let { starshipId } = useParams()
+  const { starshipId } = useParams()
 
   const { isLoading, error, data } = useQuery<Starship>({
     queryKey: ['starships', starshipId],
