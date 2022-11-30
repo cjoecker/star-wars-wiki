@@ -22,6 +22,7 @@ export const List = ({ type }: ListProps) => {
       fetch(`${BASE_URL}/${type}`)
         .then((res) => res.json())
         .then((res) => res?.results.map((result: IPeople) => addId(result))),
+    staleTime: 50000000,
   })
   const [favorites, setFavorites] = useState<People['name'][]>([])
   const [searchText, setSearchText] = useState('')

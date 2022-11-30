@@ -16,7 +16,9 @@
     "check-types": "tsc --noemit -p tsconfig.json --incremental"
   },
   "dependencies": {
+    "@tanstack/query-sync-storage-persister": "^4.18.0",
     "@tanstack/react-query": "^4.18.0",
+    "@tanstack/react-query-persist-client": "^4.18.0",
     "@tanstack/react-router": "^0.0.1-beta.28",
     "eslint-config-prettier": "^8.5.0",
     "react": "^18.2.0",

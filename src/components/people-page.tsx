@@ -65,6 +65,7 @@ type HomeworldsProps = {
 }
 
 export function Homeworlds({ id }: HomeworldsProps) {
+  console.log('comp', ['planets', id]);
   const { isLoading, error, data } = useQuery<Planet>({
     queryKey: ['planets', id],
     queryFn: () => fetch(`${BASE_URL}/planets/${id}`).then((res) => res.json()),
