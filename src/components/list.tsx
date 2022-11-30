@@ -28,7 +28,7 @@ const ListItem = ({
         <div className="text-lg mx-4 my-auto flex-1">{name}</div>
         <div className="flex">
           <button
-              className="rounded-xl bg-gray-800 py-2 px-4 hover:bg-gray-700"
+              className="rounded-xl bg-gray-700 py-2 px-4 hover:bg-gray-800"
               onClick={onClickMoreInformation}
           >
             SEE MORE

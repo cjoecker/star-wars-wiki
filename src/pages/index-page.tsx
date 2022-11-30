@@ -1,12 +1,6 @@
 import { List, ListType } from '../components/list'
 import { useState } from 'react'
 
-// const Lists: Record<ListType, React.Component> = {
-//   'people':<List type={'people'} />
-//   'starships':<List type={'people'} />
-//   'planets':<List type={'people'} />
-//
-// }
 type SelectorButtonProps = {
   label: string
   isSelected: boolean
@@ -14,7 +8,7 @@ type SelectorButtonProps = {
 }
 const SelectorButton = ({ label, isSelected, onClick }: SelectorButtonProps) => {
   return (
-    <button className={`rounded-md flex-1 ${isSelected && 'bg-gray-600'}`} onClick={onClick}>
+    <button className={`rounded-xl flex-1 py-2 ${isSelected && 'bg-gray-700'}`} onClick={onClick}>
       {label}
     </button>
   )
@@ -35,7 +29,7 @@ export const IndexPage = () => {
           onChange={(event) => setSearchText(event.target.value)}
         />
       </div>
-      <div className="rounded-md bg-gray-800 w-[400px] flex mx-auto mb-6">
+      <div className="rounded-xl bg-gray-900 w-[400px] flex mx-auto mb-6">
         <SelectorButton
           label="CHARACTERS"
           onClick={() => setSelectedList('people')}

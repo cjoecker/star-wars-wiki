@@ -1,4 +1,3 @@
-import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { PeoplePage } from './pages/people-page'
 import { PlanetsPage } from './pages/planets-page'
