@@ -1,27 +1,33 @@
 import * as React from 'react'
 import likeIconFilled from '../assets/like-icon-filled.svg'
 import likeIconEmpty from '../assets/like-icon-empty.svg'
-import { IPeople } from 'swapi-ts'
 import { useQuery } from '@tanstack/react-query'
 import { BASE_URL } from '../constants/api'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { People, Planet, Starship } from '../types/api'
+import { addId } from '../utils/getIdFromUrl'
+import {IPeople} from "swapi-ts";
+
+type ListType = 'people' | 'starships' | 'planets'
 
 type ListProps = {
-  type: 'people' | 'starships' | 'planets'
+  type: ListType
 }
 
 export const List = ({ type }: ListProps) => {
-  const { isLoading, error, data } = useQuery<IPeople[]>({
+  const { isLoading, error, data } = useQuery<People[]>({
     queryKey: [type],
     queryFn: () =>
       fetch(`${BASE_URL}/${type}`)
         .then((res) => res.json())
-        .then((data) => data?.results),
+        .then((res) => res?.results.map((result: IPeople) => addId(result))),
   })
-  const [favorites, setFavorites] = useState<IPeople['name'][]>([])
+  const [favorites, setFavorites] = useState<People['name'][]>([])
   const [searchText, setSearchText] = useState('')
+  const navigate = useNavigate()
 
-  const handleFavouriteClick = (name: IPeople['name']) => {
+  const handleFavouriteClick = (name: People['name']) => {
     if (favorites.includes(name)) {
       setFavorites((prevNames) => prevNames.filter((prevName) => prevName !== name))
     } else {
@@ -47,10 +53,11 @@ export const List = ({ type }: ListProps) => {
       {filteredItems?.map((item) => {
         return (
           <ListItem
-            key={item.name}
+            key={item.id}
             name={item.name}
             isFavourite={favorites.includes(item.name)}
             onFavouriteClick={handleFavouriteClick}
+            onClickMoreInformation={() => navigate(`/${type}/${item.id}`)}
           />
         )
       })}
@@ -59,20 +66,33 @@ export const List = ({ type }: ListProps) => {
 }
 
 type ListItemProps = {
-  name: IPeople['name']
+  name: string
+  onClickMoreInformation: VoidFunction
   isFavourite: boolean
-  onFavouriteClick: (name: IPeople['name']) => void
+  onFavouriteClick: (name: People['name']) => void
 }
-const ListItem = ({ name, isFavourite, onFavouriteClick }: ListItemProps) => {
+const ListItem = ({
+  name,
+  onClickMoreInformation,
+  isFavourite,
+  onFavouriteClick,
+}: ListItemProps) => {
   return (
     <div className="p-2 bg-gray-900 rounded-xl flex w-[500px]">
       <div className="text-lg mx-4 my-auto flex-1">{name}</div>
       <div className="flex">
-        <button className="rounded-xl bg-gray-800 py-2 px-4 hover:bg-gray-700">
+        <button
+          className="rounded-xl bg-gray-800 py-2 px-4 hover:bg-gray-700"
+          onClick={onClickMoreInformation}
+        >
           MORE INFORMATION
         </button>
-        <button className="my-auto h-full ml-4" onClick={() => onFavouriteClick(name)}>
-          <img className="w-8 h-8 my-auto" src={isFavourite ? likeIconFilled : likeIconEmpty} />
+        <button
+          className="my-auto h-full ml-4"
+          onClick={() => onFavouriteClick(name)}
+          aria-label={isFavourite ? 'not favourite anymore' : 'favourite'}
+        >
+          <img width="48px" height="48px" className="w-8 h-8 my-auto" alt="heart" src={isFavourite ? likeIconFilled : likeIconEmpty} />
         </button>
       </div>
     </div>

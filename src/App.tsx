@@ -4,7 +4,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
-import {People} from "./components/people";
+import {PeoplePage} from "./components/people-page";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/people/:peopleId',
-    element: <People />,
+    element: <PeoplePage />,
   },
 ])
 
