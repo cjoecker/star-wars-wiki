@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "start:dev": "cross-env ESLINT_NO_DEV_ERRORS=true react-scripts start",
     "format": "prettier --write",
     "lint": "eslint --max-warnings=0",
     "lint:fix": "npm run lint --fix",

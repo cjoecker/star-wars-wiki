@@ -1,7 +1,7 @@
 import { useQueries, useQuery } from '@tanstack/react-query'
 import { BASE_URL } from '../constants/api'
 import { useParams } from 'react-router-dom'
-import {People, Planet, Starship} from '../types/api'
+import { People, Planet, Starship } from '../types/api'
 import { HomeButton } from '../components/home-button'
 import { Loading } from '../components/loading'
 import { Error } from '../components/error'

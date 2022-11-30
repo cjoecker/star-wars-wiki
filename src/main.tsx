@@ -4,7 +4,7 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './app'
-import './index.css'
+import './main.css'
 
 const queryClient = new QueryClient({
   defaultOptions: {

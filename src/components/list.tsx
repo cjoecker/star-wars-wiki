@@ -1,5 +1,5 @@
-import likeIconFilled from '../assets/like-icon-filled.svg'
-import likeIconEmpty from '../assets/like-icon-empty.svg'
+import LikeFilledIcon from '../assets/like-filled-icon.svg'
+import LikeEmptyIcon from '../assets/like-empty-icon.svg'
 import { useQuery } from '@tanstack/react-query'
 import { BASE_URL } from '../constants/api'
 import { useState } from 'react'
@@ -16,13 +16,13 @@ type ListItemProps = {
   name: People['name'] | Starship['name'] | Planet['name']
   onClickMoreInformation: VoidFunction
   isFavourite: boolean
-  onFavouriteClick: (name: People['name']) => void
+  onClickFavourite: (name: People['name']) => void
 }
 const ListItem = ({
   name,
   onClickMoreInformation,
   isFavourite,
-  onFavouriteClick,
+  onClickFavourite,
 }: ListItemProps) => {
   return (
     <motion.div layout className="p-2 bg-gray-900 rounded-xl flex w-[450px]">
@@ -36,7 +36,7 @@ const ListItem = ({
         </button>
         <button
           className="my-auto h-full ml-4"
-          onClick={() => onFavouriteClick(name)}
+          onClick={() => onClickFavourite(name)}
           aria-label={isFavourite ? 'not favourite anymore' : 'favourite'}
         >
           <img
@@ -44,7 +44,7 @@ const ListItem = ({
             height="48px"
             className="w-8 h-8 my-auto"
             alt="heart"
-            src={isFavourite ? likeIconFilled : likeIconEmpty}
+            src={isFavourite ? LikeFilledIcon : LikeEmptyIcon}
           />
         </button>
       </div>
@@ -63,7 +63,7 @@ export const List = ({ type, searchText }: ListProps) => {
     queryFn: () =>
       fetch(`${BASE_URL}/${type}`)
         .then((res) => res.json())
-        .then((res) => res?.results.map((result: People | Starship | Planet) => addId(result))),
+        .then((res) => res?.results.map((result: People) => addId(result))),
   })
   const [favorites, setFavorites] = useState<string[]>([])
   const navigate = useNavigate()
@@ -99,7 +99,7 @@ export const List = ({ type, searchText }: ListProps) => {
               key={item.name}
               name={item.name}
               isFavourite={favorites.includes(item.name)}
-              onFavouriteClick={handleFavouriteClick}
+              onClickFavourite={handleFavouriteClick}
               onClickMoreInformation={() => navigate(`/${type}/${item.id}`)}
             />
           )
