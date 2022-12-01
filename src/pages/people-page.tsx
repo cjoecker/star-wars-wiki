@@ -6,6 +6,7 @@ import { Loading } from '../components/loading'
 import { Error } from '../components/error'
 import { useStarWarsQuery, getItem, parseUrlId } from '../utils/api'
 import { LinkButton } from '../components/link-button'
+import { ProfileEntry } from '../components/profile-entry'
 
 type HomeworldsProps = {
   id: string | undefined
@@ -64,19 +65,6 @@ export function Starships({ ids }: StarshipsProps) {
       ) : (
         <div>None</div>
       )}
-    </div>
-  )
-}
-
-export type ProfileEntryProps = {
-  label: string
-  value: string | undefined
-}
-export const ProfileEntry = ({ label, value }: ProfileEntryProps) => {
-  return (
-    <div className="col-span-1 flex-col">
-      <h2 className="font-bold">{label}</h2>
-      <div className="text-3xl capitalize">{value ?? 'Undefined'}</div>
     </div>
   )
 }
