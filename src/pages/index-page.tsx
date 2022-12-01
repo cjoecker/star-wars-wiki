@@ -29,7 +29,7 @@ export const IndexPage = () => {
           onChange={(event) => setSearchText(event.target.value)}
         />
       </div>
-      <div className="rounded-xl bg-gray-900 w-[400px] flex mx-auto mb-6">
+      <div className="rounded-xl bg-gray-900 w-full max-w-[400px] flex mx-auto mb-6">
         <SelectorButton
           label="CHARACTERS"
           onClick={() => setSelectedList('people')}

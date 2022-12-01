@@ -24,11 +24,11 @@ const ListItem = ({
   onClickFavourite,
 }: ListItemProps) => {
   return (
-    <motion.div layout className="p-2 bg-gray-900 rounded-xl flex w-[450px]">
+    <motion.div layout className="p-2 bg-gray-900 rounded-xl flex w-full">
       <div className="text-lg mx-4 my-auto flex-1">{name}</div>
       <div className="flex">
         <button
-          className="rounded-xl bg-gray-700 py-2 px-4 hover:bg-gray-800"
+          className="rounded-xl bg-gray-700 py-2 px-4 hover:bg-gray-800 ml-8"
           onClick={onClickMoreInformation}
         >
           SEE MORE
@@ -85,7 +85,7 @@ export const List = ({ type, searchText }: ListProps) => {
   }
 
   return (
-    <div className="flex flex-col mx-auto items-center gap-3">
+    <div className="flex flex-col items-center gap-3 flex-1 w-full max-w-[470px]">
       {isLoading ? (
         <Loading />
       ) : (
