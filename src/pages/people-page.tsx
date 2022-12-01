@@ -70,7 +70,7 @@ export function Starships({ ids }: StarshipsProps) {
 
 export type ProfileEntryProps = {
   label: string
-  value?: string
+  value: string | undefined
 }
 export const ProfileEntry = ({ label, value }: ProfileEntryProps) => {
   return (
