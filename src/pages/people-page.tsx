@@ -5,6 +5,7 @@ import { HomeButton } from '../components/home-button'
 import { Loading } from '../components/loading'
 import { Error } from '../components/error'
 import { useStarWarsQuery, getItem, parseUrlId } from '../utils/api'
+import { LinkButton } from '../components/link-button'
 
 type HomeworldsProps = {
   id: string | undefined
@@ -20,16 +21,7 @@ export function Homeworlds({ id }: HomeworldsProps) {
   return (
     <div className="col-span-1 flex-col">
       <h2 className="font-bold">Homeworld</h2>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <a
-          className="text-3xl underline hover:text-blue-200 cursor-pointer"
-          href={`/planets/${id}`}
-        >
-          {data?.name}
-        </a>
-      )}
+      {isLoading ? <Loading /> : <LinkButton label={data?.name} url={`/planets/${id}`} />}
     </div>
   )
 }
@@ -62,13 +54,11 @@ export function Starships({ ids }: StarshipsProps) {
           return starship.isLoading ? (
             <Loading />
           ) : (
-            <a
+            <LinkButton
               key={starship.data?.id}
-              className="text-3xl underline hover:text-blue-200 cursor-pointer"
-              href={`/starships/${starship.data?.id}`}
-            >
-              {starship.data?.name}
-            </a>
+              label={starship.data?.name}
+              url={`/starships/${starship.data?.id}`}
+            />
           )
         })
       ) : (

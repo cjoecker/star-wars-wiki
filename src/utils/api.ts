@@ -19,15 +19,15 @@ export function addId(object: Starship | People | Planet) {
 }
 
 export function getItem<T>(id: string | undefined, type: ResourceType): Promise<T> {
-    return fetch(`${BASE_URL}/${type}/${id}`)
-        .then((res) => res.json())
-        .then((res) => addId(res) as T)
+  return fetch(`${BASE_URL}/${type}/${id}`)
+    .then((res) => res.json())
+    .then((res) => addId(res) as T)
 }
 
 export function getItems<T>(type: ResourceType): Promise<T> {
-    return fetch(`${BASE_URL}/${type}`)
-        .then((res) => res.json())
-        .then((res) => res?.results.map((result: Starship | People | Planet) => addId(result) as T))
+  return fetch(`${BASE_URL}/${type}`)
+    .then((res) => res.json())
+    .then((res) => res?.results.map((result: Starship | People | Planet) => addId(result) as T))
 }
 
 export function useStarWarsQuery<T>(type: ResourceType, id: string | undefined) {
