@@ -18,7 +18,7 @@ export const IndexPage = () => {
   const [selectedList, setSelectedList] = useState<ResourceType>('people')
   const [searchText, setSearchText] = useState('')
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mx-2">
       <h1 className="text-5xl bold mt-5 mb-10">Star Wars WIKI</h1>
       <div className="flex flex-col w-72 flex-0 mb-14 mt-2">
         <label htmlFor="search">Search</label>
