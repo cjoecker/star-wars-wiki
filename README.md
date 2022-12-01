@@ -25,10 +25,10 @@ Then, commit and push the new `.node-version` file to `main` branch once you che
 npm run dev # starts application locally in dev mode
 npm run build # builds the application
 
-npm run format # runs prettier to format the code
+npm run format:all # runs prettier to format all the code in src folder
 npm run lint <file path> # runs eslint to check the code
 npm run lint:fix <file path> # runs eslint to check and fix the code
-npm run lint:all # runs lint in all the code
-npm run lint:fix:all # runs lint in all the code and fix it
+npm run lint:all # runs lint in all the code in src folder
+npm run lint:fix:all # runs and fix lint in all the code in src folder
 npm run check-types # checks typescript files
 ```

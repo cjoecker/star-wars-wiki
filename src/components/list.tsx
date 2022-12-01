@@ -1,16 +1,15 @@
 import LikeFilledIcon from '../assets/like-filled-icon.svg'
 import LikeEmptyIcon from '../assets/like-empty-icon.svg'
 import { useQuery } from '@tanstack/react-query'
-import { BASE_URL } from '../constants/api'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { People, Planet, Starship } from '../types/api'
-import { addId } from '../utils/parse-url-id'
 import { Error } from './error'
 import { Loading } from './loading'
 import { motion } from 'framer-motion'
+import { getItems } from '../utils/api'
 
-export type ListType = 'people' | 'starships' | 'planets'
+export type ResourceType = 'people' | 'starships' | 'planets'
 
 type ListItemProps = {
   name: People['name'] | Starship['name'] | Planet['name']
@@ -53,17 +52,14 @@ const ListItem = ({
 }
 
 type ListProps = {
-  type: ListType
+  type: ResourceType
   searchText: string
 }
 
 export const List = ({ type, searchText }: ListProps) => {
   const { isLoading, error, data } = useQuery<People[]>({
     queryKey: [type],
-    queryFn: () =>
-      fetch(`${BASE_URL}/${type}`)
-        .then((res) => res.json())
-        .then((res) => res?.results.map((result: People) => addId(result))),
+    queryFn: () => getItems(type),
   })
   const [favorites, setFavorites] = useState<string[]>([])
   const navigate = useNavigate()

@@ -1,22 +1,17 @@
-import { useQueries, useQuery } from '@tanstack/react-query'
-import { BASE_URL } from '../constants/api'
+import { useQueries } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { People, Planet, Starship } from '../types/api'
 import { HomeButton } from '../components/home-button'
 import { Loading } from '../components/loading'
 import { Error } from '../components/error'
-import { addId, parseUrlId } from '../utils/parse-url-id'
+import { useStarWarsQuery, getItem, parseUrlId } from '../utils/api'
 
 type HomeworldsProps = {
   id: string | undefined
 }
 
 export function Homeworlds({ id }: HomeworldsProps) {
-  const { isLoading, error, data } = useQuery<Planet>({
-    queryKey: ['planets', id],
-    queryFn: () => fetch(`${BASE_URL}/planets/${id}`).then((res) => res.json()),
-    enabled: !!id,
-  })
+  const { isLoading, error, data } = useStarWarsQuery<Planet>('planets', id)
 
   if (error) {
     return <Error error={error} />
@@ -49,10 +44,7 @@ export function Starships({ ids }: StarshipsProps) {
       ids?.map((id) => {
         return {
           queryKey: ['starships', id],
-          queryFn: () =>
-            fetch(`${BASE_URL}/starships/${id}`)
-              .then((res) => res.json())
-              .then((res) => addId(res) as Starship),
+          queryFn: () => getItem<Starship>(id, 'starships'),
           enabled: !!ids,
         }
       }) ?? [],
@@ -101,10 +93,7 @@ export const ProfileEntry = ({ label, value }: ProfileEntryProps) => {
 
 export const PeoplePage = () => {
   const { peopleId } = useParams()
-  const { isLoading, error, data } = useQuery<People>({
-    queryKey: ['people', peopleId],
-    queryFn: () => fetch(`${BASE_URL}/people/${peopleId}`).then((res) => res.json()),
-  })
+  const { isLoading, error, data } = useStarWarsQuery<People>('people', peopleId)
 
   if (error) {
     return <Error error={error} />

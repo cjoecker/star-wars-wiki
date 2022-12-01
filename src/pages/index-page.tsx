@@ -1,4 +1,4 @@
-import { List, ListType } from '../components/list'
+import { List, ResourceType } from '../components/list'
 import { useState } from 'react'
 
 type SelectorButtonProps = {
@@ -15,7 +15,7 @@ const SelectorButton = ({ label, isSelected, onClick }: SelectorButtonProps) => 
 }
 
 export const IndexPage = () => {
-  const [selectedList, setSelectedList] = useState<ListType>('people')
+  const [selectedList, setSelectedList] = useState<ResourceType>('people')
   const [searchText, setSearchText] = useState('')
   return (
     <div className="flex flex-col items-center">

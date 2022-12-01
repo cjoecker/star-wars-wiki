@@ -1,19 +1,15 @@
-import { useQuery } from '@tanstack/react-query'
-import { BASE_URL } from '../constants/api'
 import { useParams } from 'react-router-dom'
 import { Planet } from '../types/api'
 import { HomeButton } from '../components/home-button'
 import { Loading } from '../components/loading'
 import { Error } from '../components/error'
 import { ProfileEntry } from '../components/profile-entry'
+import { useStarWarsQuery } from '../utils/api'
 
 export const PlanetsPage = () => {
   const { planetId } = useParams()
 
-  const { isLoading, error, data } = useQuery<Planet>({
-    queryKey: ['planets', planetId],
-    queryFn: () => fetch(`${BASE_URL}/planets/${planetId}`).then((res) => res.json()),
-  })
+  const { isLoading, error, data } = useStarWarsQuery<Planet>('planets', planetId)
 
   if (error) {
     return <Error error={error} />
